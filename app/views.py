@@ -47,3 +47,10 @@ def landing(request):
 
 	session = pynder.Session(request.session['facebook_id'], request.session['facebook_auth_token'])
 	return render(request, 'app/landing.html', {"matches": session.matches()})
+
+def profile(request, match_id):
+	session = session = pynder.Session(request.session['facebook_id'], request.session['facebook_auth_token'])
+	matches = session.matches()
+	match = matches[int(match_id)]
+	messages = match.messages
+	return render(request, 'app/profile.html', {"user": match.user, "messages": messages})

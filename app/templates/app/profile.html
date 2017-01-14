@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title>TinderPal</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app/style.css' %}" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        {% for url in user.photos %}
+          <div class="col-md-2">
+            <div class="profile-pic-container">
+              <img src="{{ url }}" alt="Profile Pic {{ forloopcounter0 }}" class="profile-pic" />
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <p class="profile-name">
+            {{ user.name }}, {{ user.age }}
+          </p>
+          <p class="profile-bio">
+            {{ user.bio}}
+          </p>
+        </div>
+        <div class="col-md-4">
+          <ul class="list-group message-container">
+            {% for message in messages %}
+              <li class="list-group-item message {% if message.sender.name == user.name %} list-group-item-info {% endif %}">
+                {{ message.sender.name }}: {{ message.body }}
+              </li>
+            {% empty %}
+              <li class="list-group-item">
+                It appears you don't have any messages with {{ user.name }} yet.
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="col-md-4">
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

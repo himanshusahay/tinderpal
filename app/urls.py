@@ -5,4 +5,5 @@ urlpatterns = [
 	url(r'^$', views.index, name='index'),
 	url(r'^login', views.login, name='login'),
 	url(r'^landing', views.landing, name='landing'),
+	url(r'^(?P<match_id>[0-9]+)/profile/$', views.profile, name='profile'),
 ]
