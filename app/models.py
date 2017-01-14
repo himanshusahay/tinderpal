@@ -27,7 +27,7 @@ class Line(models.Model):
 	categories = models.ManyToManyField(Category)
 
 	def __str__(self):
-		return self.tag + "\n"
+		return self.line_text + "\n"
 
 	class Meta:
 		ordering = ('line_text', )
