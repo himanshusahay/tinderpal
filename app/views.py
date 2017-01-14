@@ -42,7 +42,6 @@ def landing(request):
 		request.session['facebook_id'] = request.POST['facebook_id']
 
 	if request.POST.get('email'):
-		print('Getting token', request.session['facebook_auth_token'])
 		request.session['facebook_auth_token'] = get_access_token(request.POST['email'], request.POST['password'])
 
 	session = pynder.Session(request.session['facebook_id'], request.session['facebook_auth_token'])
