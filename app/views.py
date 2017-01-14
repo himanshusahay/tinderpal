@@ -42,10 +42,5 @@ def landing(request):
 	facebook_auth_token = get_access_token(request.POST['email'], request.POST['password']) #request.session['facebook_auth_token']
 
 	session = pynder.Session(facebook_id, facebook_auth_token)
-	# print("facebook_id", facebook_id, "facebook_auth_token", facebook_auth_token)
-	num_matches = len(session.matches())
-	# print("API", ap.auth(facebook_id, facebook_auth_token))
-	# r = requests.post("http://api.gotinder.com/auth", headers={'app-version': '3', 'platform': 'ios'}, data=json.dumps({'facebook_id': str(facebook_id), 'facebook_token': facebook_auth_token}))
-	# print("R:", r.json())
-
-	return render(request, 'app/landing.html', {"id": facebook_id, "token": facebook_auth_token, "matches": num_matches})
+	request.session['matches'] = session.matches()
+	return render(request, 'app/landing.html', {"matches": request.session['matches']})
