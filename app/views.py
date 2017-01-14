@@ -15,8 +15,8 @@ def index(request):
 	return render(request, 'app/index.html')
 
 def login(request):
-	request.session['facebook_id'] = request.POST['facebook_id']
-	request.session['facebook_auth_token'] = request.POST['facebook_access_token']
+	# request.session['facebook_id'] = request.POST['facebook_id']
+	# request.session['facebook_auth_token'] = request.POST['facebook_access_token']
 
 	return HttpResponse("Success")
 
@@ -38,9 +38,12 @@ def get_access_token(email, password):
 
 
 def landing(request):
-	facebook_id = request.POST['facebook_id']
-	facebook_auth_token = get_access_token(request.POST['email'], request.POST['password']) #request.session['facebook_auth_token']
+	if request.POST.get('facebook_id'):
+		request.session['facebook_id'] = request.POST['facebook_id']
 
-	session = pynder.Session(facebook_id, facebook_auth_token)
-	request.session['matches'] = session.matches()
-	return render(request, 'app/landing.html', {"matches": request.session['matches']})
+	if request.POST.get('email'):
+		print('Getting token', request.session['facebook_auth_token'])
+		request.session['facebook_auth_token'] = get_access_token(request.POST['email'], request.POST['password'])
+
+	session = pynder.Session(request.session['facebook_id'], request.session['facebook_auth_token'])
+	return render(request, 'app/landing.html', {"matches": session.matches()})
