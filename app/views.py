@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.db.models import Q
-from models import Line
+from .models import Line
 import pynder
 import requests
 import json
@@ -68,7 +68,7 @@ def line_selector(request, match_id):
 		match = matches[int(match_id)]
 		# Create object of Recommender class to tag words and filter by noun, verb and adverb
 		rec = Recommender(match.user.bio)
-		filtered_tagged_words =	rec.tag_words()	
+		filtered_tagged_words =	rec.tag_words()
 		# Now, query the database for messages in the chosen category which match these tags
 		# If no tags match, spit out a random  message
 		line_tag_count = {}
@@ -96,7 +96,7 @@ def line_selector(request, match_id):
 		else:
 			line = random.choice(lines).line_text
 			print ("no matches")
-	
+
 	return profile(request, match_id, line)
 
 def send(request, match_id):
