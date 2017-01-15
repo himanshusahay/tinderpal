@@ -2,3 +2,7 @@ python-dateutil
 cached_property
 pynder
 robobrowser
+nltk
+google-cloud-vision
+# Command to get google vision to work
+export GOOGLE_APPLICATION_CREDENTIALS=/home/myles/Documents/tinderpal/app/TinderPal.json
