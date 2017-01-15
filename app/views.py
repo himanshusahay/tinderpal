@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 import pynder
@@ -53,4 +53,13 @@ def profile(request, match_id):
 	match = matches[int(match_id)]
 	messages = match.messages
 	padding = range(int((12 - (len(match.user.photos) * 2)) / 2))
-	return render(request, 'app/profile.html', {"user": match.user, "messages": messages, "padding": padding})
+	return render(request, 'app/profile.html', {"user": match.user, "messages": messages, "padding": padding, "id": match_id})
+
+def send(request, match_id):
+	if request.POST.get('message'):
+		session = session = pynder.Session(request.session['facebook_id'], request.session['facebook_auth_token'])
+		matches = session.matches()
+		match = matches[int(match_id)]
+		match.message(request.POST['message'])
+
+	return redirect(reverse('profile', args=[match_id]))

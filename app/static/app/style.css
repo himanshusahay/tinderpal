@@ -54,3 +54,8 @@
 .message-container {
   font-size: 1.5em;
 }
+
+.message-input-container {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}

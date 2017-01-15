@@ -57,6 +57,15 @@
               </li>
             {% endfor %}
           </ul>
+          <form method="post" action="/app/{{ id }}/send/">
+            {% csrf_token %}
+            <div class="input-group input-group-lg message-input-container">
+              <input type="text" name="message" class="form-control" placeholder="Messsage...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">Send</button>
+              </span>
+            </div>
+          </form>
         </div>
       </div>
     </div>
