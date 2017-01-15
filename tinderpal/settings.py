@@ -120,7 +120,7 @@ STATIC_URL = '/static/'
 
 
 # SSL force (heroku supports SSL)
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CSRF_COOKIE_SECURE = True
 
