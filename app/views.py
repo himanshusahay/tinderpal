@@ -10,7 +10,9 @@ import re
 import robobrowser
 import operator
 import random
+from .image import generate_tags
 from .recommender import Recommender
+import functools
 MOBILE_USER_AGENT = "Mozilla/5.0 (Linux; U; en-gb; KFTHWI Build/JDQ39) AppleWebKit/535.19 (KHTML, like Gecko) Silk/3.16 Safari/535.19"
 FB_AUTH = "https://www.facebook.com/v2.6/dialog/oauth?redirect_uri=fb464891386855067%3A%2F%2Fauthorize%2F&display=touch&state=%7B%22challenge%22%3A%22IUUkEUqIGud332lfu%252BMJhxL4Wlc%253D%22%2C%220_auth_logger_id%22%3A%2230F06532-A1B9-4B10-BB28-B29956C71AB1%22%2C%22com.facebook.sdk_client_state%22%3Atrue%2C%223_method%22%3A%22sfvc_auth%22%7D&scope=user_birthday%2Cuser_photos%2Cuser_education_history%2Cemail%2Cuser_relationship_details%2Cuser_friends%2Cuser_work_history%2Cuser_likes&response_type=token%2Csigned_request&default_audience=friends&return_scopes=true&auth_type=rerequest&client_id=464891386855067&ret=login&sdk=ios&logger_id=30F06532-A1B9-4B10-BB28-B29956C71AB1&ext=1470840777&hash=AeZqkIcf-NEW6vBd"
 
@@ -69,12 +71,16 @@ def line_selector(request, match_id):
 		# Create object of Recommender class to tag words and filter by noun, verb and adverb
 		rec = Recommender(match.user.bio)
 		filtered_tagged_words =	rec.tag_words()
+		tags = generate_tags(match.user.photos)
+		diff = set(tags) - set(filtered_tagged_words)
+		filtered_tagged_words = set(filtered_tagged_words + list(diff))
+		# print("Tags: ", filtered_tagged_words)
 		# Now, query the database for messages in the chosen category which match these tags
 		# If no tags match, spit out a random  message
 		line_tag_count = {}
 		tag_match = False
 		q = [category_selected]
-		query = reduce(operator.and_, (Q(categories__category_name__contains = item) for item in q))
+		query = functools.reduce(operator.and_, (Q(categories__category_name__contains = item) for item in q))
 		lines = Line.objects.filter(query)
 		for line in lines:
 			tags = []
@@ -82,7 +88,7 @@ def line_selector(request, match_id):
 				tags.append(tag.tag_name)
 			line_tag_count[line.line_text] = 0
 			# If tag matches found
-			if len(set(tags).intersection(set(filtered_tagged_words))) > 0:
+			if len(set(tags).intersection(filtered_tagged_words)) > 0:
 				line_tag_count += 1
 				tag_match = True
 

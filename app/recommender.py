@@ -1,4 +1,4 @@
-import nltk 
+import nltk
 import re
 
 nltk.download('punkt')
@@ -22,6 +22,6 @@ class Recommender:
 		pattern3 = re.compile("R.*")
 		for (word, tag) in tagged_words:
 			if pattern1.match(tag) or pattern2.match(tag) or pattern3.match(tag):
-				tagged_words_filtered.append((word.lower(), tag))
+				tagged_words_filtered.append(word.lower())
 
 		return tagged_words_filtered
