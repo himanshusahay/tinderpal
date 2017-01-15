@@ -71,8 +71,8 @@ def line_selector(request, match_id):
 		# Create object of Recommender class to tag words and filter by noun, verb and adverb
 		rec = Recommender(match.user.bio)
 		filtered_tagged_words =	rec.tag_words()
-		tags = generate_tags(match.user.photos)
-		diff = set(tags) - set(filtered_tagged_words)
+		image_tags = generate_tags(match.user.photos)
+		diff = set(image_tags) - set(filtered_tagged_words)
 		filtered_tagged_words = set(filtered_tagged_words + list(diff))
 		# print("Tags: ", filtered_tagged_words)
 		# Now, query the database for messages in the chosen category which match these tags
