@@ -45,7 +45,7 @@
 
             <button type="submit" name="submit" class="btn btn-default">Get Opener</button>
           </form>
-          <p> {{ line_option }} </p>
+          {% if line_option %} <p>{{ line_option }}</p> {% endif %} 
         </div>
         <div class="col-md-6">
           <ul class="list-group message-container">

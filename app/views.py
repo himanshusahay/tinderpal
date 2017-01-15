@@ -89,14 +89,14 @@ def line_selector(request, match_id):
 			line_tag_count[line.line_text] = 0
 			# If tag matches found
 			if len(set(tags).intersection(filtered_tagged_words)) > 0:
-				line_tag_count += 1
+				line_tag_count[line.line_text] += 1
 				tag_match = True
 
 		line = None
 		# Tag(s) matched
 		if tag_match:
-			print ("num matches: ", line_tag_count[0])
-			line = sorted(line_tag_count.items(), key=operator.itemgetter(1))[0].line_text
+			# print ("num matches: ", line_tag_count[0])
+			line = sorted(line_tag_count.items(), key=operator.itemgetter(1))[0][0]
 
 		# No tags matched
 		else:
