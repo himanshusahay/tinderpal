@@ -122,7 +122,7 @@ STATIC_URL = '/static/'
 # SSL force (heroku supports SSL)
 SECURE_SSL_REDIRECT = False
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 # Using cookie-based sessions
 # SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
