@@ -52,4 +52,5 @@ def profile(request, match_id):
 	matches = session.matches()
 	match = matches[int(match_id)]
 	messages = match.messages
-	return render(request, 'app/profile.html', {"user": match.user, "messages": messages})
+	padding = range(int((12 - (len(match.user.photos) * 2)) / 2))
+	return render(request, 'app/profile.html', {"user": match.user, "messages": messages, "padding": padding})
