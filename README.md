@@ -3,5 +3,5 @@ Tinder Pal recommends messages to send to your Tinder matches
 
 
 * Uses the [Pynder] client for the private Tinder API.
-* Uses the Facebook Login AAPI an Google Vision API.
+* Uses the Facebook Login API an Google Vision API.
 * Uses Django 1.10 and Python 3.6
